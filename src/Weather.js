@@ -7,15 +7,29 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 export default function Weather()
 {
     const [city,setCity] = useState("");
+    const [msg, setMsg] = useState("");
     const [weather, setWeather] = useState({}); 
     let day;
 
-  function handelSearch(event)
-  {
-    event.preventDefault();
-    setCity(event.target.value);
+    function displayForecast(response)
+    {
+        let forecast = response.data.daily;
 
-  }
+        forecast.forEach(function (forecastDay) {
+            
+            let src=`http://shecodes-assets.s3.amazonaws.com/api/weather/icons/${forecastDay.condition.icon}.png`;
+                   
+        });
+    }
+
+    function getForecast(coords) {
+        // console.log(coords);
+        let Apikey = "03ob4taaa6f366304d608c02ae4ad453";
+        let ApiUrl = `https://api.shecodes.io/weather/v1/forecast?lon=${coords.lon}&lat=${coords.lat}&key=${Apikey}&units=metric`;
+        // console.log(ApiUrl);
+        axios.get(ApiUrl).then(displayForecast);
+    }
+
   function display(response)
   {
     console.log(response.data);
@@ -23,8 +37,10 @@ export default function Weather()
         temperature: response.data.main.temp,
         humidity: response.data.main.humidity,
         wind: response.data.wind.speed,
+        desc: response.data.weather[0].description,
         icon: `https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
     });
+    getForecast(response.data.coord);
   }
   function currentDisplay(response)
   {
@@ -44,9 +60,15 @@ export default function Weather()
     let apiurl = `https://api.openweathermap.org/data/2.5/weather?q=london&appid=${apikey}&units=metric`;
     axios.get(apiurl).then(currentDisplay);
   }
+   function handelSearch(event)
+  {
+    event.preventDefault();
+    setCity(event.target.value);
+  }
   function onSearchEvent(event)
   {
     event.preventDefault();
+    setMsg(city);
     let apikey = "08f21c358ceb7bbd0f79880f5ba5bbf3";
     let apiurl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apikey}&units=metric`;
     axios.get(apiurl).then(display);
@@ -72,9 +94,10 @@ export default function Weather()
             </button>
           </form>
           </div>
-            <h2 id="LoadedCityName">{city}</h2>
+          <div className="ml-3">
+            <h2 id="LoadedCityName">{msg}</h2>
             <h5>Last updated at: <span id="date">@{day} 16:00</span></h5>
-            <h5 id="desc">Cloudy</h5>
+            <h5 id="desc">{weather.desc}</h5>
             <div className="temp">
                 <div className="cloud"><img id="icon" alt="" src={weather.icon} />
                 {/* "https://openweathermap.org/img/wn/10d@2x.png" */}
@@ -82,6 +105,7 @@ export default function Weather()
                 <h1 id="tmp">{weather.temperature}</h1>
                 <div id="c" className="celciusPosition">°C<span>|</span></div>
                 <div id="f" className="celciusPosition">°F</div>
+            </div>
             </div>
             <div className="wind">
                 <div>
@@ -128,7 +152,7 @@ export default function Weather()
                 </div>
             </div>
         </div>
-        <p className="footer"><a href="https://github.com/vijetarajput/Weather-Project">Open-source code </a>by Vijeta Singh Rajput</p>
+        <p className="footer"><a href="https://github.com/vijetarajput/React_Weather_App">Open-source code </a>by Vijeta Singh Rajput</p>
     </div>
     );
 } 
