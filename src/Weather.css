@@ -1,0 +1,51 @@
+.cloud {
+  display: inline;
+  position: relative;
+  top: -15px;
+}
+.temp {
+  display: inline;
+}
+#tmp {
+  display: inline;
+  font-size: 3.5rem;
+  margin-right: 5px;
+}
+.celciusPosition {
+  display: inline;
+  position: relative;
+  top: -30px;
+  left: -10px;
+}
+h6 {
+  display: inline;
+}
+.wind {
+  margin: 0 0 0 380px;
+  position: relative;
+  top: -100px;
+}
+.weather-forecast {
+  margin: 0 10px 0px 12px;
+}
+.footer {
+  text-align: center;
+  text-decoration: none;
+}
+.weather-forecast-date {
+  text-align: center;
+}
+.forecast {
+  display: inline;
+}
+.forecast_img {
+  display: inline;
+  height: 30px;
+  width: 30px;
+  position: relative;
+  left: -4px;
+}
+p {
+  position: relative;
+  left: -5px;
+}
