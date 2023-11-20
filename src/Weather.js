@@ -9,47 +9,53 @@ export default function Weather()
     const [city,setCity] = useState("");
     const [msg, setMsg] = useState("");
     const [weather, setWeather] = useState({}); 
-    let day;
+    // const [forecast,setForecast]=useState();
+   
+    // function getForecast(coords) {
+    //     let Apikey = "03ob4taaa6f366304d608c02ae4ad453";
+    //     let ApiUrl = `https://api.shecodes.io/weather/v1/forecast?lon=${coords.lon}&lat=${coords.lat}&key=${Apikey}&units=metric`;
+    //     axios.get(ApiUrl).then(displayForecast);
+    // }
 
-    function displayForecast(response)
-    {
-        let forecast = response.data.daily;
-
-        forecast.forEach(function (forecastDay) {
-            
-            let src=`http://shecodes-assets.s3.amazonaws.com/api/weather/icons/${forecastDay.condition.icon}.png`;
-                   
-        });
-    }
-
-    function getForecast(coords) {
-        // console.log(coords);
-        let Apikey = "03ob4taaa6f366304d608c02ae4ad453";
-        let ApiUrl = `https://api.shecodes.io/weather/v1/forecast?lon=${coords.lon}&lat=${coords.lat}&key=${Apikey}&units=metric`;
-        // console.log(ApiUrl);
-        axios.get(ApiUrl).then(displayForecast);
+    function formatDate(timestamp) {
+        let date = new Date(timestamp);
+        let hours = date.getHours();
+        if (hours < 10) {
+            hours = `0${hours}`;
+        }
+        let minutes = date.getMinutes();
+        if (minutes < 10) {
+            minutes = `0${minutes}`;
+        }
+        let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        let day = days[date.getDay()];
+        return `${day} ${hours}:${minutes}`;
     }
 
   function display(response)
   {
-    console.log(response.data);
+    // console.log(response.data);
     setWeather({
         temperature: response.data.main.temp,
         humidity: response.data.main.humidity,
         wind: response.data.wind.speed,
         desc: response.data.weather[0].description,
-        icon: `https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
+        icon: `https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`,
+        day: formatDate(response.data.dt * 1000)
     });
-    getForecast(response.data.coord);
+    // getForecast(response.data.coord);
   }
+
   function currentDisplay(response)
   {
-    console.log(response.data);
+    // console.log(response.data);
     setWeather({
         temperature: response.data.main.temp,
         humidity: response.data.main.humidity,
         wind: response.data.wind.speed,
-        icon: `https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
+        desc: response.data.weather[0].description,
+        icon: `https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`,
+        day: formatDate(response.data.dt * 1000)
     });
   }
   function onCurrentEvent(event)
@@ -59,6 +65,7 @@ export default function Weather()
     let apikey = "08f21c358ceb7bbd0f79880f5ba5bbf3";
     let apiurl = `https://api.openweathermap.org/data/2.5/weather?q=london&appid=${apikey}&units=metric`;
     axios.get(apiurl).then(currentDisplay);
+
   }
    function handelSearch(event)
   {
@@ -96,7 +103,7 @@ export default function Weather()
           </div>
           <div className="ml-3">
             <h2 id="LoadedCityName">{msg}</h2>
-            <h5>Last updated at: <span id="date">@{day} 16:00</span></h5>
+            <h5>Last updated at: <span id="date">@{weather.day}</span></h5>
             <h5 id="desc">{weather.desc}</h5>
             <div className="temp">
                 <div className="cloud"><img id="icon" alt="" src={weather.icon} />
@@ -122,31 +129,31 @@ export default function Weather()
                     
                     <div className="forecast col">
                         <p>Mon</p>
-                        <img  class="forecast_img" id="icon" alt="" src={weather.icon} />
+                        <img  className="forecast_img" id="icon" alt="" src={weather.icon} />
                     </div>
                     <div className="forecast col">
                         <p>Mon</p>
-                        <img  class="forecast_img" id="icon" alt="" src={weather.icon} />
+                        <img  className="forecast_img" id="icon" alt="" src={weather.icon} />
                     </div>
                     <div className="forecast col">
                         <p>Mon</p>
-                        <img  class="forecast_img" id="icon" alt="" src={weather.icon} />
+                        <img  className="forecast_img" id="icon" alt="" src={weather.icon} />
                     </div>
                     <div className="forecast col">
                         <p>Mon</p>
-                        <img  class="forecast_img" id="icon" alt="" src={weather.icon} />
+                        <img  className="forecast_img" id="icon" alt="" src={weather.icon} />
                     </div>
                     <div className="forecast col">
                         <p>Mon</p>
-                        <img  class="forecast_img" id="icon" alt="" src={weather.icon} />
+                        <img  className="forecast_img" id="icon" alt="" src={weather.icon} />
                     </div>
                     <div className="forecast col">
                         <p>Mon</p>
-                        <img  class="forecast_img" id="icon" alt="" src={weather.icon} />
+                        <img  className="forecast_img" id="icon" alt="" src={weather.icon} />
                     </div>
                     <div className="forecast col">
                         <p>Mon</p>
-                        <img  class="forecast_img" id="icon" alt="" src={weather.icon} />
+                        <img  className="forecast_img" id="icon" alt="" src={weather.icon} />
                     </div>
                 
                 </div>
