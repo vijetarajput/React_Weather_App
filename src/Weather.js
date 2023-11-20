@@ -152,7 +152,7 @@ export default function Weather()
                 </div>
             </div>
         </div>
-        <p className="myfooter"><a href="https://github.com/vijetarajput/React_Weather_App">Open-source code </a>by Vijeta Singh Rajput</p>
+        <p className="footer"><a href="https://github.com/vijetarajput/React_Weather_App">Open-source code </a>by Vijeta Singh Rajput</p>
     </div>
     );
 } 
